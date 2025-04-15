@@ -10,6 +10,11 @@ export const dashboard = expressAsyncHandler(async (req: Request, res: Response)
             user_id: user.id
         }
     });
-    res.status(200).json({ message: 'These are the files', file: getFile });
+    const getFolder = await prisma.folder.findMany({
+        where: {
+            user_id: user.id
+        }
+    })
+    res.status(200).json({ message: 'These are the files', file: getFile, folder: getFolder });
     return;
 });

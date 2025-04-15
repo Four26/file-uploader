@@ -1,37 +1,19 @@
-import { logOut } from "../services/logout/logOut";
-import { useNavigate } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
 import { GoUpload } from "react-icons/go";
-import { uploadFile } from "../components/uploadFile";
+import { useHandleLogOut } from "../components/useHandleLogOut";
+import { handleFileChangeInput } from "../components/handleFileChangeInput";
+import { CreateFolderModal } from "./CreateFolderModal";
+import { useReducerHook } from "../hooks/useReducerHook";
 
 export const Header = () => {
-    const navigate = useNavigate();
+    const [state, dispatch] = useReducerHook();
 
-    /* <----- Handle upload files -----> */
-    const handleFileChangeInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const files = e.target.files;
+    const fileChangeInput = handleFileChangeInput;
+    const logOut = useHandleLogOut();
 
-        if (files) {
-            const response = await uploadFile({ file: files[0] });
-            console.log(response.message, response.file);
-        }
-    }
-    /* <----- End of handle upload files -----> */
+    const createFolder = () => dispatch({ type: 'SHOW_CREATE_FOLDER_MODAL', payload: { showCreateFolderModal: true } });
+    const folderName = state.folderName.folderName;
 
-    /* <-----Handle LogOut button -----> */
-    const handleLogOut = async () => {
-        try {
-            const response = await logOut();
-
-            if (!response?.error) {
-                navigate('/');
-            }
-
-        } catch (error) {
-            return error;
-        }
-    }
-    /* <----- End  of handle logout button -----> */
 
     return (
         <header>
@@ -45,24 +27,23 @@ export const Header = () => {
                         <span
                         >Upload File</span>
                         <input
-                            onChange={handleFileChangeInput}
+                            onChange={fileChangeInput}
                             type="file"
                             className="cursor-pointer hidden"
                         />
                     </label>
 
                     <div className="new-folder">
-                        <input
-                            type="text"
-                            className="hidden" />
                         <button
+                            onClick={createFolder}
                             className="bg-blue-400 text-white border-blue-300 cursor-pointer rounded-lg shadow-md hover:scale-105 hover:shadow-lg transition-all duration-300 ease-in-out flex items-center gap-2 px-8 py-2"> <FiPlus /><span>New Folder</span></button>
                     </div>
 
-                    <a onClick={handleLogOut}
+                    <a onClick={logOut}
                         className="underline text-black hover:text-white transition-all duration-200 ease-in cursor-pointer"> Logout</a>
                 </div>
             </nav>
+            {state.showCreateFolderModal.showCreateFolderModal && <CreateFolderModal dispatch={dispatch} folderName={folderName} />}
         </header>
     )
 }
