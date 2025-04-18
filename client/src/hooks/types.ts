@@ -14,7 +14,7 @@ type Username = { username: string }
 export type LogInField = { username: string, password: string }
 
 //Modal
-type ShowModal = { showModal: boolean, type: 'create' | 'upload' | null }
+type ShowModal = { showModal: boolean, type: 'create' | 'upload' | "" }
 
 //Folder Name 
 type FolderInputValue = { folderName: string }
@@ -31,7 +31,7 @@ interface FileFolderItem {
 }
 
 //View file and folder
-type FileFolderData = { data: FileFolderItem[], loading: boolean }
+export type FileFolderData = { data: FileFolderItem[], loading: boolean }
 
 type FolderId = {
     currentFolderId: number | null

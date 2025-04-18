@@ -6,9 +6,10 @@ type Props = {
     dispatch: React.Dispatch<Action>,
     folderName: string
     currentFolderId: number | null
+    onSuccess: () => void
 }
 
-export const CreateFolderModal = ({ dispatch, folderName, currentFolderId }: Props) => {
+export const CreateFolderModal = ({ dispatch, folderName, currentFolderId, onSuccess }: Props) => {
     const folderInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = e.target.value;
         dispatch({ type: 'SET_FOLDER_NAME', payload: { folderName: inputValue } })
@@ -18,24 +19,29 @@ export const CreateFolderModal = ({ dispatch, folderName, currentFolderId }: Pro
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        console.log(folderName);
-        await createFolder(folderName, currentFolderId);
-        const folderContents = await folder(currentFolderId || null);
+        try {
+            await createFolder(folderName, currentFolderId);
 
-        if (folderContents) {
-            dispatch({ type: 'SET_FILE_FOLDER_DATA', payload: folderContents });
+            const updatedData = currentFolderId !== null ? await folder(currentFolderId) : await getData();
+
+            if (updatedData) {
+                dispatch({ type: 'SET_FILE_FOLDER_DATA', payload: updatedData });
+            }
+            if (onSuccess) onSuccess();
+
+            dispatch({ type: 'SET_FOLDER_NAME', payload: { folderName: '' } });
+            dispatch({ type: 'SHOW_MODAL', payload: { showModal: false, type: "" } });
+
+        } catch (error) {
+            console.log('Error creating folder', error);
+            return error;
         }
-
-        const fetchUpdatedData = await getData();
-        dispatch({ type: 'SET_FILE_FOLDER_DATA', payload: fetchUpdatedData });
-        dispatch({ type: 'SET_FOLDER_NAME', payload: { folderName: '' } });
-        dispatch({ type: 'SHOW_MODAL', payload: { showModal: false, type: null } });
     }
 
     const closeModal = () => {
         console.log("Closing modal...");
 
-        dispatch({ type: 'SHOW_MODAL', payload: { showModal: false, type: null } });
+        dispatch({ type: 'SHOW_MODAL', payload: { showModal: false, type: "" } });
     }
     return (
         <div className="fixed inset-0 top-0 left-0 w-full h-full bg-transparent opacity-95 z-50">
