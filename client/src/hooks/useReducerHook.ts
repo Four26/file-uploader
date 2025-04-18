@@ -1,55 +1,5 @@
 import { useReducer } from "react"
-
-//Signup input field initial value
-export type SignUpField = {
-    firstname: string,
-    lastname: string,
-    username: string,
-    password: string,
-    confirmPassword: string
-}
-
-//Successful signup response
-type SignUpResponse = {
-    message: string
-}
-
-//Login error response
-type LogInResponse = {
-    error: string
-}
-
-//Login input field initial value
-export type LogInField = {
-    username: string,
-    password: string
-}
-
-type ShowCreateFolderModal = {
-    showCreateFolderModal: boolean
-}
-
-type FolderInputValue = {
-    folderName: string
-}
-
-type State = {
-    signUpField: SignUpField,
-    signUpResponse: SignUpResponse,
-    logInField: LogInField,
-    logInResponse: LogInResponse,
-    showCreateFolderModal: ShowCreateFolderModal,
-    folderName: FolderInputValue
-}
-
-export type Action =
-    | { type: 'SIGNUP_INPUTS_VALUE'; payload: Partial<SignUpField> }
-    | { type: 'SIGNUP_RESPONSE'; payload: SignUpResponse }
-    | { type: 'LOGIN_INPUTS_VALUE'; payload: Partial<LogInField> }
-    | { type: 'LOGIN_RESPONSE'; payload: LogInResponse }
-    | { type: 'SHOW_CREATE_FOLDER_MODAL'; payload: ShowCreateFolderModal }
-    | { type: 'SET_FOLDER_NAME'; payload: FolderInputValue }
-
+import { State, Action } from "./types";
 
 function reducer(state: State, action: Action) {
     switch (action.type) {
@@ -61,10 +11,18 @@ function reducer(state: State, action: Action) {
             return { ...state, logInField: { ...state.logInField, ...action.payload } }
         case 'LOGIN_RESPONSE':
             return { ...state, logInResponse: action.payload }
-        case 'SHOW_CREATE_FOLDER_MODAL':
-            return { ...state, showCreateFolderModal: action.payload }
+        case 'SHOW_MODAL':
+            return { ...state, showModal: { ...action.payload } }
         case 'SET_FOLDER_NAME':
             return { ...state, folderName: action.payload }
+        case 'SET_FILE_FOLDER_DATA':
+            return { ...state, fileFolderData: { ...state.fileFolderData, ...action.payload } }
+        case 'DISPLAY_USERNAME':
+            return { ...state, getUsername: action.payload }
+        case 'CURRENT_FOLDER':
+            return { ...state, currentFolder: action.payload }
+        case 'ADD_TO_HISTORY':
+            return { ...state, navigationHistory: { navigationHistory: [...state.navigationHistory.navigationHistory, action.payload] } }
         default:
             return state
     }
@@ -88,11 +46,25 @@ const initialState: State = {
     logInResponse: {
         error: ''
     },
-    showCreateFolderModal: {
-        showCreateFolderModal: false
+    showModal: {
+        showModal: false,
+        type: null
     },
     folderName: {
         folderName: ''
+    },
+    fileFolderData: {
+        data: [],
+        loading: false
+    },
+    getUsername: {
+        username: ''
+    },
+    currentFolder: {
+        currentFolderId: null
+    },
+    navigationHistory: {
+        navigationHistory: []
     }
 
 }

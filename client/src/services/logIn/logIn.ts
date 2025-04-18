@@ -1,5 +1,5 @@
 import { URL } from "../../api/URL";
-import { LogInField } from "../../hooks/useReducerHook";
+import { LogInField } from "../../hooks/types";
 
 export const logIn = async (userData: LogInField) => {
     try {

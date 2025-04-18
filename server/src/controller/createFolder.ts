@@ -6,15 +6,23 @@ import path from "path";
 
 const prisma = new PrismaClient();
 
-const generateUniqueFolderName = (basePath: string, baseName: string) => {
-    let name = baseName;
-    let counter = 1;
+async function getParentFolders(folderId: number): Promise<Array<{ name: string }>> {
+    const parents = [];
+    let currentId = folderId;
 
-    while (fs.existsSync(path.join(basePath, name))) {
-        name = `${baseName}(${counter})`;
-        counter++;
+    while (currentId) {
+        const folder = await prisma.folder.findUnique({
+            where: { id: currentId },
+            select: { name: true, parent_id: true }
+        });
+
+        if (!folder) break;
+
+        parents.unshift({ name: folder.name });
+        currentId = folder.parent_id || 0;
     }
-    return name;
+
+    return parents;
 }
 
 export const createFolder = expressAsyncHandler(async (req: Request, res: Response) => {
@@ -23,13 +31,28 @@ export const createFolder = expressAsyncHandler(async (req: Request, res: Respon
 
     try {
         const baseFolderPath = path.join(__dirname, "../folders");
-        const parentFolder = parent_id ? await prisma.folder.findUnique({ where: { id: parent_id } }) : null;
-        const parentPath = parentFolder ? path.join(baseFolderPath, parentFolder.name) : baseFolderPath;
-        const defaultFolderName = folderName || "New Folder";
-        const finalFolderName = generateUniqueFolderName(parentPath, defaultFolderName);
-        const fullPath = path.join(parentPath, finalFolderName);
+
+        let parentPath = baseFolderPath;
+
+        if (parent_id) {
+            const parentFolders = await getParentFolders(parent_id);
+
+            parentPath = path.join(baseFolderPath, ...parentFolders.map(f => f.name))
+            await fs.promises.mkdir(parentPath, { recursive: true });
+        };
+
+        let finalFolderName = folderName || "New Folder";
+        let counter = 1;
+        let fullPath = path.join(parentPath, finalFolderName);
+
+        while (fs.existsSync(fullPath)) {
+            finalFolderName = `${folderName || "New Folder"}(${counter})`;
+            fullPath = path.join(parentPath, finalFolderName);
+            counter++;
+        }
 
         await fs.promises.mkdir(fullPath);
+
         const folderData = await prisma.folder.create({
             data: {
                 name: finalFolderName,

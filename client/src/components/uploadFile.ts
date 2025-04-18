@@ -1,12 +1,18 @@
 import { URL } from "../api/URL";
 
-type InputFileData = {
+type Props = {
     file: File
+    currentFolderId: number | null
 }
 
-export const uploadFile = async ({ file }: InputFileData) => {
+export const uploadFile = async ({ file, currentFolderId }: Props) => {
     const fileData = new FormData();
     fileData.append('file', file);
+
+    if (currentFolderId) {
+        fileData.append('folder_id', currentFolderId.toString());
+    }
+
     try {
         const response = await fetch(`${URL}/uploadFile`, {
             method: 'POST',

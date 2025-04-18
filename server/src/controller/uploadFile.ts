@@ -7,6 +7,7 @@ const prisma = new PrismaClient();
 export const uploadFile = expressAsyncHandler(async (req: Request, res: Response) => {
     const file = req.file;
     const user = req.user as users;
+    const { folder_id } = req.body
 
     if (!file) {
         res.status(400).json({ message: 'No file uploaded!' });
@@ -22,7 +23,7 @@ export const uploadFile = expressAsyncHandler(async (req: Request, res: Response
             uploaded_at: new Date(),
             file_path: file.path,
             file_url: fileUrl,
-            folder_id: null,
+            folder_id: folder_id ? parseInt(folder_id) : null,
             user_id: user.id
         }
     });

@@ -7,6 +7,7 @@ import { dashboard } from '../controller/dashboard';
 import { uploadFile } from '../controller/uploadFile';
 import { multerMiddleware } from '../middleware/multerMiddleware';
 import { createFolder } from '../controller/createFolder';
+import { folder } from '../controller/folder';
 
 export const router = express.Router();
 
@@ -19,5 +20,7 @@ router.post('/logout', logOut);
 router.post('/uploadFile', multerMiddleware(), uploadFile);
 
 router.post('/createFolder', createFolder);
+
+router.post('/folders/:folderId', folder)
 
 router.get('/dashboard', isAuthenticated, dashboard);

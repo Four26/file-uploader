@@ -4,6 +4,7 @@ import { Request, Response } from "express";
 export const logOut = expressAsyncHandler(async (req: Request, res: Response) => {
     req.logout(() => {
         req.session.destroy((error) => {
+            res.clearCookie('connect.sid');
             if (error) {
                 return res.status(500).json({ error: error.message });
             }

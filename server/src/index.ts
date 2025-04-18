@@ -8,6 +8,7 @@ import session from "express-session";
 import { router } from "./routes/router";
 import connectPgSimple from "connect-pg-simple";
 import { errorHandler } from "./middleware/errorHandler";
+import { initializeFileSystem } from './utils/fileSytemInit';
 
 
 
@@ -21,6 +22,8 @@ app.use(cors({
     credentials: true,
     exposedHeaders: ['Content-Type', 'Authorization']
 }));
+
+initializeFileSystem();
 
 app.use(express.json());
 

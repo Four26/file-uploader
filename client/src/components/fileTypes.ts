@@ -1,9 +1,11 @@
 import { IconType } from "react-icons";
-import { FaFilePdf, FaFileWord, FaFileExcel, FaFileArchive, FaFileVideo, FaFileAudio, FaFileAlt } from "react-icons/fa";
+import { FaFilePdf, FaFileWord, FaFileExcel, FaFileArchive, FaFileVideo, FaFileAudio, FaFileAlt, FaImage } from "react-icons/fa";
+import { AiOutlineFileGif } from "react-icons/ai";
 
-export const isImageFile = (filename: string) => {
-    return /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(filename);
-}
+
+// export const isImageFile = (filename: string) => {
+//     return /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(filename);
+// }
 
 //Function to get the file type
 export const getFileIcon = (filename: string) => {
@@ -24,6 +26,10 @@ export const getFileIcon = (filename: string) => {
         mp3: FaFileAudio,
         wav: FaFileAudio,
         txt: FaFileAlt,
+        png: FaImage,
+        jpg: FaImage,
+        jpeg: FaImage,
+        gif: AiOutlineFileGif,
         default: FaFileAlt
     };
 

@@ -1,14 +1,17 @@
 import { Header } from "../pages/Header";
-import { Dashboard } from "../pages/Dashboard";
-import { Footer } from "../pages/Footer";
+// import { Dashboard } from "../pages/Dashboard";
+// import { useEffect } from "react";
+// import { getData } from "../components/getData"
+// import { useReducerHook } from "../hooks/useReducerHook";
+import { Outlet } from "react-router-dom";
 export const Mainlayout = () => {
+
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col h-screen">
             <Header />
-            <main className="flex-1">
-                <Dashboard />
+            <main className="flex-1 overflow-auto">
+                <Outlet />
             </main>
-            <Footer />
         </div>
     )
 }
