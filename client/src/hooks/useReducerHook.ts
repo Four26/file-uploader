@@ -48,7 +48,7 @@ const initialState: State = {
     },
     showModal: {
         showModal: false,
-        type: null
+        type: ""
     },
     folderName: {
         folderName: ''

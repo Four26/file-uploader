@@ -10,11 +10,13 @@ type Props = {
     currentItems: FileFolderData['data'],
     folderId: string | undefined,
     createFolder: () => void,
-    uploadFile: () => void
-    handleFolderClick: (folderId: number) => void
+    uploadFile: () => void,
+    handleFolderClick: (folderId: number) => void,
+    handleDelete: (id: number, type: string) => void
 }
 
-export const FileFolder = ({ currentItems, folderId, createFolder, uploadFile, handleFolderClick }: Props) => {
+export const FileFolder = ({ currentItems, folderId, createFolder, uploadFile, handleFolderClick, handleDelete }: Props) => {
+
     return (
         <div className="flex-1 overflow-auto p-6">
             {currentItems.length === 0 ? (
@@ -103,7 +105,13 @@ export const FileFolder = ({ currentItems, folderId, createFolder, uploadFile, h
                                                 className="text-gray-600 hover:text-gray-800 transition-colors">
                                                 Rename
                                             </button>
-                                            <button className="text-red-600 hover:text-red-800 transition-colors">
+                                            <button
+                                                onClick={() => {
+                                                    if (window.confirm(item.type === "folder" ? `Are you sure you want to delete ${item.name} and all it's contents?` : `Are you sure you want to delete ${item.name}?`)) {
+                                                        handleDelete(item.id, item.type);
+                                                    }
+                                                }}
+                                                className="text-red-600 hover:text-red-800 transition-colors">
                                                 Delete
                                             </button>
                                         </div>

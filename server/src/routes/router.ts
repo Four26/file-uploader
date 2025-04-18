@@ -8,6 +8,7 @@ import { uploadFile } from '../controller/uploadFile';
 import { multerMiddleware } from '../middleware/multerMiddleware';
 import { createFolder } from '../controller/createFolder';
 import { folder } from '../controller/folder';
+import { deleteData } from '../controller/deleteData';
 
 export const router = express.Router();
 
@@ -24,3 +25,5 @@ router.post('/createFolder', createFolder);
 router.post('/folders/:folderId', folder)
 
 router.get('/dashboard', isAuthenticated, dashboard);
+
+router.delete('/deleteData/:id', deleteData);

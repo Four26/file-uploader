@@ -1,5 +1,10 @@
 import { URL } from "../api/URL";
 export const getData = async () => {
+
+    // const url = folderId !== null
+    //     ? `${URL}/dashboard?folderId=${folderId}`
+    //     : `${URL}/dashboard`;
+
     try {
         const response = await fetch(`${URL}/dashboard`, {
             method: 'GET',

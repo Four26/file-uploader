@@ -10,7 +10,6 @@ export const folder = async (folderId: number | null) => {
             body: JSON.stringify({ folderId })
         });
         const data = await response.json();
-
         if (!response.ok) return false;
         return data;
     } catch (error) {

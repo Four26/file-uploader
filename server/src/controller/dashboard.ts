@@ -16,7 +16,6 @@ export const dashboard = expressAsyncHandler(async (req: Request, res: Response)
 
     const taggedFile = getFile.map(data => ({ ...data, type: 'file', folder_id: data.folder_id, parent_id: null }));
     const taggedFolder = getFolder.map(data => ({ ...data, type: 'folder', folder_id: null, parent_id: data.parent_id }));
-
     const mergedData = [...taggedFile, ...taggedFolder];
     res.status(200).json({ message: 'These are the files', data: mergedData, user: user });
     return;

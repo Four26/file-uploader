@@ -19,7 +19,7 @@ type ShowModal = { showModal: boolean, type: 'create' | 'upload' | "" }
 //Folder Name 
 type FolderInputValue = { folderName: string }
 
-interface FileFolderItem {
+export interface FileFolderItem {
     id: number;
     name: string;
     size: number;

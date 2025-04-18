@@ -22,15 +22,26 @@ export const CreateFolderModal = ({ dispatch, folderName, currentFolderId, onSuc
         try {
             await createFolder(folderName, currentFolderId);
 
-            const updatedData = currentFolderId !== null ? await folder(currentFolderId) : await getData();
+
+
+            let updatedData;
+
+            if (currentFolderId !== null) {
+                updatedData = await folder(currentFolderId);
+            } else {
+                updatedData = await getData();
+            }
 
             if (updatedData) {
                 dispatch({ type: 'SET_FILE_FOLDER_DATA', payload: updatedData });
             }
-            if (onSuccess) onSuccess();
-
+            if (onSuccess) {
+                onSuccess();
+            }
             dispatch({ type: 'SET_FOLDER_NAME', payload: { folderName: '' } });
             dispatch({ type: 'SHOW_MODAL', payload: { showModal: false, type: "" } });
+
+
 
         } catch (error) {
             console.log('Error creating folder', error);

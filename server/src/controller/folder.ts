@@ -8,18 +8,21 @@ export const folder = expressAsyncHandler(async (req: Request, res: Response) =>
     const { folderId } = req.params;
     console.log(folderId);
     try {
+        let files, folders;
+
         if (folderId === 'null') {
-            const files = await prisma.file.findMany({
+            files = await prisma.file.findMany({
                 where: { folder_id: null }
             });
-            const folders = await prisma.folder.findMany({
+            folders = await prisma.folder.findMany({
                 where: { parent_id: null }
             });
+            res.status(200).json({ files, folders });
         } else {
-            const files = await prisma.file.findMany({
+            files = await prisma.file.findMany({
                 where: { folder_id: Number(folderId) }
             });
-            const folders = await prisma.folder.findMany({
+            folders = await prisma.folder.findMany({
                 where: { parent_id: Number(folderId) }
             });
 

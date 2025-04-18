@@ -10,6 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Sidebar } from "../components/dashboard/Sidebar";
 import { Username } from "../components/dashboard/Username";
 import { FileFolder } from "../components/dashboard/FileFolder";
+import { deleteData } from "../components/deleteData";
 
 type Props = {
     state: State;
@@ -61,12 +62,21 @@ export const Dashboard = ({ state, dispatch }: Props) => {
             console.error('Failed to load data:', error);
             return error
         }
-    }, [folderId, dispatch]);
+    }, [dispatch, folderId]);
 
+    const handleDelete = async (id: number, type: string) => {
+        try {
+            await deleteData(id, type);
+            await loadData();
+        } catch (error) {
+            console.error('Error deleting data', error);
+            return error;
+        }
+    }
 
     useEffect(() => {
         loadData();
-    }, [loadData]);
+    }, [loadData, folderId]);
 
     return (
         <div className="flex h-screen bg-gray-50">
@@ -79,7 +89,7 @@ export const Dashboard = ({ state, dispatch }: Props) => {
                 <Username state={state} />
 
                 {/* File/Folder List */}
-                <FileFolder currentItems={currentItems} folderId={folderId} createFolder={createFolder} uploadFile={uploadFile} handleFolderClick={handleFolderClick} />
+                <FileFolder currentItems={currentItems} folderId={folderId} createFolder={createFolder} uploadFile={uploadFile} handleFolderClick={handleFolderClick} handleDelete={handleDelete} />
             </div>
 
             {/* Modals */}
