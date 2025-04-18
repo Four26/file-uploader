@@ -9,9 +9,10 @@ import { CreateFolderModal } from "./CreateFolderModal";
 import { UploadFileModal } from "./UploadFileModal";
 import { folder } from "../components/folder";
 import { useNavigate, useParams } from "react-router-dom";
-import { Breadcrumbs } from "../components/Breadcrumbs";
+
 
 import { Sidebar } from "../components/dashboard/Sidebar";
+import { Username } from "../components/dashboard/Username";
 
 type Props = {
     state: State;
@@ -85,17 +86,7 @@ export const Dashboard = ({ state, dispatch }: Props) => {
             {/* Main Content */}
             <div className="flex-1 flex flex-col overflow-hidden">
                 {/* Username */}
-                <div className="bg-white border-b border-gray-200 p-4">
-                    <div className="flex justify-between items-center">
-                        <Breadcrumbs state={state} />
-                        <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-medium">
-                                {state.getUsername.username?.charAt(0).toUpperCase()}
-                            </div>
-                            <span className="text-sm font-medium">{state.getUsername.username}</span>
-                        </div>
-                    </div>
-                </div>
+                <Username state={state} />
 
                 {/* File/Folder List */}
                 <div className="flex-1 overflow-auto p-6">
