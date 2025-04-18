@@ -11,6 +11,8 @@ import { folder } from "../components/folder";
 import { useNavigate, useParams } from "react-router-dom";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 
+import { Sidebar } from "../components/dashboard/Sidebar";
+
 type Props = {
     state: State;
     dispatch: Dispatch<Action>;
@@ -78,39 +80,7 @@ export const Dashboard = ({ state, dispatch }: Props) => {
     return (
         <div className="flex h-screen bg-gray-50">
             {/* Sidebar */}
-            <div className="w-64 bg-white border-r border-gray-200 p-4 flex flex-col">
-                <div className="space-y-2">
-                    <button
-                        onClick={createFolder}
-                        className="flex items-center w-full gap-2 px-4 py-3 text-sm font-medium rounded-lg bg-white text-gray-700 hover:bg-blue-50 transition-colors border border-gray-200"
-                    >
-                        <HiOutlineFolderAdd className="text-lg text-blue-500" />
-                        <span>New Folder</span>
-                    </button>
-
-                    <button
-                        onClick={uploadFile}
-                        className="flex items-center w-full gap-2 px-4 py-3 text-sm font-medium rounded-lg bg-white text-gray-700 hover:bg-blue-50 transition-colors border border-gray-200"
-                    >
-                        <TbFileUpload className="text-lg text-blue-500" />
-                        <span>Upload File</span>
-                    </button>
-                </div>
-
-                <div className="mt-6">
-                    <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Quick Access</h3>
-                    <div className="space-y-1">
-                        <button className="flex items-center w-full gap-2 px-3 py-2 text-sm rounded-md text-gray-700 hover:bg-gray-100">
-                            <FaFolder className="text-yellow-400" />
-                            <span>Recent Files</span>
-                        </button>
-                        <button className="flex items-center w-full gap-2 px-3 py-2 text-sm rounded-md text-gray-700 hover:bg-gray-100">
-                            <FaFolder className="text-blue-400" />
-                            <span>Shared with me</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <Sidebar createFolder={createFolder} uploadFile={uploadFile} />
 
             {/* Main Content */}
             <div className="flex-1 flex flex-col overflow-hidden">
@@ -211,7 +181,8 @@ export const Dashboard = ({ state, dispatch }: Props) => {
                                                     <button className="text-blue-600 hover:text-blue-800 transition-colors">
                                                         Share
                                                     </button>
-                                                    <button className="text-gray-600 hover:text-gray-800 transition-colors">
+                                                    <button
+                                                        className="text-gray-600 hover:text-gray-800 transition-colors">
                                                         Rename
                                                     </button>
                                                     <button className="text-red-600 hover:text-red-800 transition-colors">
