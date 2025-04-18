@@ -11,6 +11,7 @@ import { Sidebar } from "../components/dashboard/Sidebar";
 import { Username } from "../components/dashboard/Username";
 import { FileFolder } from "../components/dashboard/FileFolder";
 import { deleteData } from "../components/deleteData";
+import { editName } from "../components/editName";
 
 type Props = {
     state: State;
@@ -53,16 +54,31 @@ export const Dashboard = ({ state, dispatch }: Props) => {
 
     const loadData = useCallback(async () => {
         try {
-            const username = await getData();
-            dispatch({ type: "DISPLAY_USERNAME", payload: { username: username.user.username } });
+            const updatedData = await getData();
+            dispatch({ type: "DISPLAY_USERNAME", payload: { username: updatedData.user.username } });
+            console.log('Folder Id:', folderId);
 
-            const contentData = folderId ? await folder(Number(folderId)) : await getData();
-            dispatch({ type: 'SET_FILE_FOLDER_DATA', payload: contentData });
+            if (folderId === undefined) {
+                dispatch({ type: 'SET_FILE_FOLDER_DATA', payload: updatedData });
+            } else {
+                dispatch({ type: 'SET_FILE_FOLDER_DATA', payload: updatedData });
+            }
+
         } catch (error) {
             console.error('Failed to load data:', error);
             return error
         }
     }, [dispatch, folderId]);
+
+    const handleEdit = async (id: number, type: string, name: string) => {
+        console.log('Clicked');
+        try {
+            await editName(id, type, name);
+        } catch (error) {
+            console.error('Error editing name', error);
+            return error;
+        }
+    }
 
     const handleDelete = async (id: number, type: string) => {
         try {
@@ -89,7 +105,7 @@ export const Dashboard = ({ state, dispatch }: Props) => {
                 <Username state={state} />
 
                 {/* File/Folder List */}
-                <FileFolder currentItems={currentItems} folderId={folderId} createFolder={createFolder} uploadFile={uploadFile} handleFolderClick={handleFolderClick} handleDelete={handleDelete} />
+                <FileFolder currentItems={currentItems} folderId={folderId} createFolder={createFolder} uploadFile={uploadFile} handleFolderClick={handleFolderClick} handleDelete={handleDelete} handleEdit={handleEdit} />
             </div>
 
             {/* Modals */}

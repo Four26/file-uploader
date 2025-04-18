@@ -14,7 +14,7 @@ type Username = { username: string }
 export type LogInField = { username: string, password: string }
 
 //Modal
-type ShowModal = { showModal: boolean, type: 'create' | 'upload' | "" }
+type ShowModal = { showModal: boolean, type: 'create' | 'upload' | "edit" | "" }
 
 //Folder Name 
 type FolderInputValue = { folderName: string }

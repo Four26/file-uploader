@@ -13,9 +13,10 @@ type Props = {
     uploadFile: () => void,
     handleFolderClick: (folderId: number) => void,
     handleDelete: (id: number, type: string) => void
+    handleEdit: (id: number, type: string, name: string) => void
 }
 
-export const FileFolder = ({ currentItems, folderId, createFolder, uploadFile, handleFolderClick, handleDelete }: Props) => {
+export const FileFolder = ({ currentItems, folderId, createFolder, uploadFile, handleFolderClick, handleDelete, handleEdit }: Props) => {
 
     return (
         <div className="flex-1 overflow-auto p-6">
@@ -102,6 +103,7 @@ export const FileFolder = ({ currentItems, folderId, createFolder, uploadFile, h
                                                 Share
                                             </button>
                                             <button
+                                                onClick={() => handleEdit(item.id, item.type, item.name)}
                                                 className="text-gray-600 hover:text-gray-800 transition-colors">
                                                 Rename
                                             </button>
