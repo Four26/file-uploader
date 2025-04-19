@@ -109,9 +109,7 @@ export const FileFolder = ({ currentItems, folderId, createFolder, uploadFile, h
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         <div className="flex gap-3">
-                                            <button className="text-blue-600 hover:text-blue-800 transition-colors">
-                                                Share
-                                            </button>
+
                                             <button
                                                 onClick={() => editNameModal(item)}
                                                 className="text-gray-600 hover:text-gray-800 transition-colors">
@@ -126,6 +124,11 @@ export const FileFolder = ({ currentItems, folderId, createFolder, uploadFile, h
                                                 className="text-red-600 hover:text-red-800 transition-colors">
                                                 Delete
                                             </button>
+                                            {item.type === "file" && (
+                                                <button className="text-blue-600 hover:text-blue-800 transition-colors">
+                                                    Download
+                                                </button>
+                                            )}
                                         </div>
                                     </td>
                                 </tr>

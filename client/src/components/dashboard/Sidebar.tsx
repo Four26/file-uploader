@@ -1,4 +1,3 @@
-import { FaFolder } from "react-icons/fa";
 import { HiOutlineFolderAdd } from "react-icons/hi";
 import { TbFileUpload } from "react-icons/tb";
 
@@ -28,18 +27,5 @@ export const Sidebar = ({ createFolder, uploadFile }: Props) => {
                 </button>
             </div>
 
-            <div className="mt-6">
-                <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Quick Access</h3>
-                <div className="space-y-1">
-                    <button className="flex items-center w-full gap-2 px-3 py-2 text-sm rounded-md text-gray-700 hover:bg-gray-100">
-                        <FaFolder className="text-yellow-400" />
-                        <span>Recent Files</span>
-                    </button>
-                    <button className="flex items-center w-full gap-2 px-3 py-2 text-sm rounded-md text-gray-700 hover:bg-gray-100">
-                        <FaFolder className="text-blue-400" />
-                        <span>Shared with me</span>
-                    </button>
-                </div>
-            </div>
         </div>)
 }
