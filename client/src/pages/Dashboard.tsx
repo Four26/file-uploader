@@ -11,7 +11,6 @@ import { Sidebar } from "../components/dashboard/Sidebar";
 import { Username } from "../components/dashboard/Username";
 import { FileFolder } from "../components/dashboard/FileFolder";
 import { deleteData } from "../components/deleteData";
-import { editName } from "../components/editName";
 
 type Props = {
     state: State;
@@ -70,16 +69,6 @@ export const Dashboard = ({ state, dispatch }: Props) => {
         }
     }, [dispatch, folderId]);
 
-    const handleEdit = async (id: number, type: string, name: string) => {
-        console.log('Clicked');
-        try {
-            await editName(id, type, name);
-        } catch (error) {
-            console.error('Error editing name', error);
-            return error;
-        }
-    }
-
     const handleDelete = async (id: number, type: string) => {
         try {
             await deleteData(id, type);
@@ -105,7 +94,7 @@ export const Dashboard = ({ state, dispatch }: Props) => {
                 <Username state={state} />
 
                 {/* File/Folder List */}
-                <FileFolder currentItems={currentItems} folderId={folderId} createFolder={createFolder} uploadFile={uploadFile} handleFolderClick={handleFolderClick} handleDelete={handleDelete} handleEdit={handleEdit} />
+                <FileFolder currentItems={currentItems} folderId={folderId} createFolder={createFolder} uploadFile={uploadFile} handleFolderClick={handleFolderClick} handleDelete={handleDelete} dispatch={dispatch} state={state} refreshData={loadData} />
             </div>
 
             {/* Modals */}
@@ -120,6 +109,7 @@ export const Dashboard = ({ state, dispatch }: Props) => {
             {state.showModal.type === "upload" && (
                 <UploadFileModal dispatch={dispatch} currentFolderId={folderId ? Number(folderId) : null} />
             )}
+
         </div>
     );
 };

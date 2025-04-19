@@ -29,14 +29,14 @@ export const UploadFileModal = ({ dispatch, currentFolderId }: Props) => {
 
         const fetchUpdatedData = await getData();
         dispatch({ type: 'SET_FILE_FOLDER_DATA', payload: fetchUpdatedData });
-        dispatch({ type: 'SHOW_MODAL', payload: { showModal: false, type: null } })
+        dispatch({ type: 'SHOW_MODAL', payload: { showModal: false, type: "" } });
     }
 
 
     const closeModal = () => {
         console.log("Closing modal...");
 
-        dispatch({ type: 'SHOW_MODAL', payload: { showModal: false, type: null } });
+        dispatch({ type: 'SHOW_MODAL', payload: { showModal: false, type: "" } });
     }
     return (
         <div className="fixed inset-0 top-0 left-0 w-full h-full bg-transparent opacity-95 z-50">

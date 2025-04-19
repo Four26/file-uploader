@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { Dispatch, useState } from 'react'
 import { FaFolder } from 'react-icons/fa';
 import { HiOutlineFolderAdd } from 'react-icons/hi';
 import { TbFileUpload } from 'react-icons/tb';
-import { FileFolderData } from '../../hooks/types';
+import { Action, FileFolderData, FileFolderItem, State } from '../../hooks/types';
 import { getFileIcon } from '../fileTypes';
 import { formatBytes } from '../formatBytes';
+import { EditNameModal } from '../../pages/EditNameModal';
 
 type Props = {
     currentItems: FileFolderData['data'],
@@ -12,11 +13,20 @@ type Props = {
     createFolder: () => void,
     uploadFile: () => void,
     handleFolderClick: (folderId: number) => void,
-    handleDelete: (id: number, type: string) => void
-    handleEdit: (id: number, type: string, name: string) => void
+    handleDelete: (id: number, type: string) => void,
+    refreshData: () => Promise<unknown>
+    dispatch: Dispatch<Action>
+    state: State
 }
 
-export const FileFolder = ({ currentItems, folderId, createFolder, uploadFile, handleFolderClick, handleDelete, handleEdit }: Props) => {
+export const FileFolder = ({ currentItems, folderId, createFolder, uploadFile, handleFolderClick, handleDelete, dispatch, state, refreshData }: Props) => {
+    const [editingItem, setEditingItem] = useState<FileFolderItem | null>(null);
+
+
+    const editNameModal = (item: FileFolderItem) => {
+        setEditingItem(item);
+        dispatch({ type: 'SHOW_MODAL', payload: { showModal: true, type: 'edit' } });
+    }
 
     return (
         <div className="flex-1 overflow-auto p-6">
@@ -103,7 +113,7 @@ export const FileFolder = ({ currentItems, folderId, createFolder, uploadFile, h
                                                 Share
                                             </button>
                                             <button
-                                                onClick={() => handleEdit(item.id, item.type, item.name)}
+                                                onClick={() => editNameModal(item)}
                                                 className="text-gray-600 hover:text-gray-800 transition-colors">
                                                 Rename
                                             </button>
@@ -123,6 +133,10 @@ export const FileFolder = ({ currentItems, folderId, createFolder, uploadFile, h
                         </tbody>
                     </table>
                 </div>
+            )}
+
+            {state.showModal.type === "edit" && editingItem !== null && (
+                <EditNameModal dispatch={dispatch} item={editingItem} onSuccess={refreshData} />
             )}
         </div>)
 }

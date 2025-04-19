@@ -12,7 +12,7 @@ export const handleFileChangeInput = async ({ e, dispatch }: Props) => {
     const files = e.target.files;
 
     if (files) {
-        const response = await uploadFile({ file: files[0] });
+        const response = await uploadFile({ file: files[0], currentFolderId: null });
         console.log(response.message, response.file);
     }
 

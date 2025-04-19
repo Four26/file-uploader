@@ -66,7 +66,6 @@ const initialState: State = {
     navigationHistory: {
         navigationHistory: []
     }
-
 }
 
 export const useReducerHook = () => {

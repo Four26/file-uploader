@@ -51,7 +51,7 @@ export type State = {
     fileFolderData: FileFolderData
     getUsername: Username
     currentFolder: FolderId
-    navigationHistory: NavigateHistory
+    navigationHistory: NavigateHistory,
 }
 
 export type Action =
@@ -65,4 +65,5 @@ export type Action =
     | { type: 'DISPLAY_USERNAME'; payload: Username }
     | { type: 'CURRENT_FOLDER'; payload: FolderId }
     | { type: 'ADD_TO_HISTORY'; payload: number }
+
 

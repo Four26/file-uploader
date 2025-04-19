@@ -1,12 +1,12 @@
 import { URL } from "../api/URL";
 
-export const editName = async (id: number, type: string, name: string) => {
+export const editName = async (id: number, type: string, newName: string) => {
     try {
         const response = await fetch(`${URL}/editName`, {
             method: 'PUT',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id, type, name })
+            body: JSON.stringify({ id, type, newName })
         });
         const data = await response.json();
         if (!response.ok) {
