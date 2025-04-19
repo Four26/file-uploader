@@ -19,7 +19,6 @@ export const Welcome = () => {
                         <li>🔍 View file details (name, size, upload time)</li>
                         <li>📥 Download your files anytime</li>
                         <li>🔒 Secure session-based authentication</li>
-                        <li>🔗 Share folders with time-limited access links</li>
                     </ul>
                 </section>
 
