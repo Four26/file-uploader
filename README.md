@@ -1,13 +1,12 @@
 ## 📁 File Uploader App
 
-A stripped-down version of Google Drive built with React and Express. This app allows users to authenticate, create folders, upload files, and manage their personal storage. Extra features include sharing folders with temporary access links.
+A stripped-down version of Google Drive built with React and Express. This app allows users to authenticate, create folders, upload files, and manage their personal storage. The app is designed to be a simple file management system with a focus on user experience and ease of  use.
 
 ## 🚀 Features
 - User authentication with session management using Passport.js.
 - Folder and File CRUD with nested folder support.
 - File uploads via Multer and local storage.
 - View file details (name, size, upload time) and download.
-- Folder sharing via temporary public links (1 day duration).
 
 ## 🛠️ Tech Stack
 Client
