@@ -10,6 +10,7 @@ import { createFolder } from '../controller/createFolder';
 import { folder } from '../controller/folder';
 import { deleteData } from '../controller/deleteData';
 import { editName } from '../controller/editName';
+import { download } from '../controller/download';
 
 export const router = express.Router();
 
@@ -28,5 +29,7 @@ router.post('/folders/:folderId', folder);
 router.put('/editName', editName)
 
 router.get('/dashboard', isAuthenticated, dashboard);
+
+router.get('/download/:id', download);
 
 router.delete('/deleteData/:id', deleteData);

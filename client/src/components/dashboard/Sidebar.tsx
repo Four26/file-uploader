@@ -8,11 +8,11 @@ type Props = {
 
 export const Sidebar = ({ createFolder, uploadFile }: Props) => {
     return (
-        <div className="w-64 bg-white border-r border-gray-200 p-4 flex flex-col">
-            <div className="space-y-2">
+        <div className="sm:w-64 bg-white border-rborder-gray-200 p-4 flex">
+            <div className="border-red-400 w-full flex items-center justify-around sm:block sm:space-y-2">
                 <button
                     onClick={createFolder}
-                    className="flex items-center w-full gap-2 px-4 py-3 text-sm font-medium rounded-lg bg-white text-gray-700 hover:bg-blue-50 transition-colors border border-gray-200"
+                    className="cursor-pointer flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-lg bg-white text-gray-700 hover:bg-blue-50 transition-colors border border-gray-200 sm:w-full"
                 >
                     <HiOutlineFolderAdd className="text-lg text-blue-500" />
                     <span>New Folder</span>
@@ -20,7 +20,7 @@ export const Sidebar = ({ createFolder, uploadFile }: Props) => {
 
                 <button
                     onClick={uploadFile}
-                    className="flex items-center w-full gap-2 px-4 py-3 text-sm font-medium rounded-lg bg-white text-gray-700 hover:bg-blue-50 transition-colors border border-gray-200"
+                    className="cursor-pointer flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-lg bg-white text-gray-700 hover:bg-blue-50 transition-colors border border-gray-200 sm:w-full"
                 >
                     <TbFileUpload className="text-lg text-blue-500" />
                     <span>Upload File</span>

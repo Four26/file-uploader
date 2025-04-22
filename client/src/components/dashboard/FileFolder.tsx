@@ -6,6 +6,7 @@ import { Action, FileFolderData, FileFolderItem, State } from '../../hooks/types
 import { getFileIcon } from '../fileTypes';
 import { formatBytes } from '../formatBytes';
 import { EditNameModal } from '../../pages/EditNameModal';
+import { download } from '../download';
 
 type Props = {
     currentItems: FileFolderData['data'],
@@ -13,7 +14,7 @@ type Props = {
     createFolder: () => void,
     uploadFile: () => void,
     handleFolderClick: (folderId: number) => void,
-    handleDelete: (id: number, type: string) => void,
+    handleDelete: (id: number, type: string, name: string) => void,
     refreshData: () => Promise<unknown>
     dispatch: Dispatch<Action>
     state: State
@@ -26,6 +27,14 @@ export const FileFolder = ({ currentItems, folderId, createFolder, uploadFile, h
     const editNameModal = (item: FileFolderItem) => {
         setEditingItem(item);
         dispatch({ type: 'SHOW_MODAL', payload: { showModal: true, type: 'edit' } });
+    }
+
+    const handleDownloadClick = async (id: number) => {
+        try {
+            await download(id);
+        } catch (error) {
+            throw new Error(`Error downloading: ${error}`)
+        }
     }
 
     return (
@@ -61,7 +70,7 @@ export const FileFolder = ({ currentItems, folderId, createFolder, uploadFile, h
                     </div>
                 </div>
             ) : (
-                <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+                <div className="bg-white rounded-xl border border-gray-200 overflow-hidden overflow-x-scroll">
                     <table className="w-full">
                         <thead className="bg-gray-50">
                             <tr>
@@ -118,14 +127,16 @@ export const FileFolder = ({ currentItems, folderId, createFolder, uploadFile, h
                                             <button
                                                 onClick={() => {
                                                     if (window.confirm(item.type === "folder" ? `Are you sure you want to delete ${item.name} and all it's contents?` : `Are you sure you want to delete ${item.name}?`)) {
-                                                        handleDelete(item.id, item.type);
+                                                        handleDelete(item.id, item.type, item.name);
                                                     }
                                                 }}
                                                 className="text-red-600 hover:text-red-800 transition-colors">
                                                 Delete
                                             </button>
                                             {item.type === "file" && (
-                                                <button className="text-blue-600 hover:text-blue-800 transition-colors">
+                                                <button
+                                                    onClick={() => handleDownloadClick(item.id)}
+                                                    className="text-blue-600 hover:text-blue-800 transition-colors">
                                                     Download
                                                 </button>
                                             )}

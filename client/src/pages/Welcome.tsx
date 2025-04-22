@@ -22,7 +22,7 @@ export const Welcome = () => {
                     </ul>
                 </section>
 
-                <section className="mt-12 flex space-x-4">
+                <section className="mt-12 flex space-x-4 sm:block">
                     <Link to="/signup" className="px-5 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition">
                         Sign up
                     </Link>

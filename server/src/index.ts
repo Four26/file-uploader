@@ -23,8 +23,6 @@ app.use(cors({
     exposedHeaders: ['Content-Type', 'Authorization']
 }));
 
-initializeFileSystem();
-
 app.use(express.json());
 
 app.use(session({

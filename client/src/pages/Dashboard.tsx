@@ -69,9 +69,9 @@ export const Dashboard = ({ state, dispatch }: Props) => {
         }
     }, [dispatch, folderId]);
 
-    const handleDelete = async (id: number, type: string) => {
+    const handleDelete = async (id: number, type: string, name: string) => {
         try {
-            await deleteData(id, type);
+            await deleteData(id, type, name);
             await loadData();
         } catch (error) {
             console.error('Error deleting data', error);
@@ -84,7 +84,7 @@ export const Dashboard = ({ state, dispatch }: Props) => {
     }, [loadData, folderId]);
 
     return (
-        <div className="flex h-screen bg-gray-50">
+        <div className="h-screen bg-gray-50 flex flex-col-reverse sm:flex-row">
             {/* Sidebar */}
             <Sidebar createFolder={createFolder} uploadFile={uploadFile} />
 
