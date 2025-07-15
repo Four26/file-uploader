@@ -33,7 +33,7 @@ passport.use(new LocalStrategy(async (username: string, password: string, done: 
 }));
 
 passport.serializeUser((user: any, done: any) => {
-    console.log(user);
+    console.log("User:", user);
     done(null, user.id);
 });
 
